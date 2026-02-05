@@ -2,14 +2,12 @@ import os
 import json
 import random
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 # -----------------------
 # Ayarlar
 # -----------------------
 TOKEN = os.environ.get("TOKEN")
-ADMIN_IDS = [int(x) for x in os.environ.get("ADMIN_IDS", "").split(",")]
-
 QUESTIONS_FILE = "questions.json"
 
 # -----------------------
@@ -36,6 +34,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # .quiz komutu
 # -----------------------
 async def quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not QUESTIONS:
+        await update.message.reply_text("⚠️ Quiz soruları yüklenemedi!")
+        return
+
     soru = random.choice(QUESTIONS)
     options = soru["options"]
     msg = f"❓ {soru['question']}\n\n"
@@ -47,11 +49,6 @@ async def quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # .add komutu (admin)
 # -----------------------
 async def add_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.message.from_user.id
-    if user_id not in ADMIN_IDS:
-        await update.message.reply_text("❌ Bu komutu sadece adminler kullanabilir.")
-        return
-
     text = " ".join(context.args)
     try:
         soru, opts, answer, difficulty = text.split("|")
@@ -72,19 +69,15 @@ async def add_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 # -----------------------
-# Main
+# Ana fonksiyon
 # -----------------------
 def main():
-    # Uygulamayı başlat
     app = ApplicationBuilder().token(TOKEN).build()
 
     # Komutlar
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("quiz", quiz))
     app.add_handler(CommandHandler("add", add_question))
-
-    # Mesajları engelleme (opsiyonel)
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, lambda u,c: None))
 
     print("Bot başlatıldı...")
     app.run_polling()
