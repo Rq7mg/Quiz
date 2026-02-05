@@ -20,21 +20,22 @@ QUESTIONS_FILE = "questions.json"
 with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
     QUESTIONS = json.load(f)
 
-GAMES = {}      # chat_id -> game state
+GAMES = {}      # chat_id -> game
 SCORES = {}     # chat_id -> {user_id: score}
-USERNAMES = {}  # user_id -> name
+USERNAMES = {}  # user_id -> username
 
 
 # ---------- START ----------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🎮 Süreli Quiz Botu\n\n"
-        "Admin komutları:\n"
+        "Admin:\n"
         ".quiz → Oyunu başlat\n"
         ".son → Oyunu bitir\n\n"
-        "Cevaplar:\n"
-        "A/B/C/D veya 1/2/3/4\n\n"
-        "⏱ Her soru 20 saniye"
+        "Cevap:\n"
+        "A/B/C/D veya 1/2/3/4\n"
+        "⏱ Süre: 20 saniye\n\n"
+        "ℹ️ Sonuçlar süre bitince açıklanır"
     )
 
 
@@ -42,15 +43,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def send_question(chat_id, context):
     q = random.choice(QUESTIONS)
 
-    text = f"❓ {q['question']}\n\n"
+    question_text = f"❓ {q['question']}\n\n"
     for i, opt in enumerate(q["options"], 1):
-        text += f"{i}. {opt}\n"
+        question_text += f"{i}. {opt}\n"
 
-    await context.bot.send_message(chat_id, text)
+    await context.bot.send_message(chat_id, question_text)
 
     GAMES[chat_id] = {
-        "answer": q["answer"],
-        "answers": {},
+        "answer": q["answer"].lower().strip(),
+        "answers": {},      # user_id -> answer
         "correct": set()
     }
 
@@ -71,19 +72,19 @@ async def send_question(chat_id, context):
             f"@{USERNAMES.get(uid, uid)}"
             for uid in game["correct"]
         )
-        msg = (
+        result_text = (
             f"⏰ Süre doldu!\n"
             f"✅ Doğru cevap: {game['answer'].upper()}\n\n"
             f"🎉 Doğru bilenler:\n{users}"
         )
     else:
-        msg = (
+        result_text = (
             f"⏰ Süre doldu!\n"
             f"✅ Doğru cevap: {game['answer'].upper()}\n\n"
             f"❌ Kimse doğru bilemedi."
         )
 
-    await context.bot.send_message(chat_id, msg)
+    await context.bot.send_message(chat_id, result_text)
 
     if chat_id in GAMES:
         await send_question(chat_id, context)
@@ -136,7 +137,9 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     game = GAMES[chat_id]
 
+    # Aynı soruya ikinci cevap yok
     if user_id in game["answers"]:
+        await update.message.reply_text("⛔ Bu soruya zaten cevap verdin.")
         return
 
     convert = {"1": "a", "2": "b", "3": "c", "4": "d"}
@@ -147,6 +150,9 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     game["answers"][user_id] = text
+
+    # Emoji / geri bildirim (sonuç yok)
+    await update.message.reply_text("🕐 Cevabın alındı.")
 
 
 # ---------- MAIN ----------
