@@ -1,0 +1,339 @@
+[
+  {
+    "question": "Dünyanın en büyük okyanusu hangisidir?",
+    "options": ["Atlantik", "Hint", "Pasifik", "Arktik"],
+    "answer": "Pasifik"
+  },
+  {
+    "question": "Fransa’nın başkenti neresidir?",
+    "options": ["Lyon", "Marseille", "Paris", "Nice"],
+    "answer": "Paris"
+  },
+  {
+    "question": "Işığın boşluktaki hızı yaklaşık olarak kaç km/s'dir?",
+    "options": ["300,000", "150,000", "30,000", "3,000"],
+    "answer": "300,000"
+  },
+  {
+    "question": "Türkiye Cumhuriyeti’nin kurucusu kimdir?",
+    "options": ["İnönü", "Atatürk", "Erdoğan", "Bayar"],
+    "answer": "Atatürk"
+  },
+  {
+    "question": "En uzun süre tahtta kalan İngiliz monark kimdir?",
+    "options": ["Victoria", "Elizabeth II", "Henry VIII", "Edward III"],
+    "answer": "Elizabeth II"
+  },
+  {
+    "question": "DNA’nın yapı taşı nedir?",
+    "options": ["Nükleotit", "Amino asit", "Lipit", "Şeker"],
+    "answer": "Nükleotit"
+  },
+  {
+    "question": "Olympiyat Oyunları hangi ülkede doğmuştur?",
+    "options": ["İtalya", "Mısır", "Yunanistan", "Fransa"],
+    "answer": "Yunanistan"
+  },
+  {
+    "question": "Dünyanın en yüksek dağı hangisidir?",
+    "options": ["K2", "Kanchenjunga", "Everest", "Lhotse"],
+    "answer": "Everest"
+  },
+  {
+    "question": "Türkiye’nin en kalabalık şehri hangisidir?",
+    "options": ["Ankara", "İzmir", "Bursa", "İstanbul"],
+    "answer": "İstanbul"
+  },
+  {
+    "question": "Bir yıl kaç gündür?",
+    "options": ["364", "365", "366", "363"],
+    "answer": "365"
+  },
+  {
+    "question": "Ay’ın Dünya etrafında dolanma süresi yaklaşık kaç gündür?",
+    "options": ["28", "30", "24", "31"],
+    "answer": "28"
+  },
+  {
+    "question": "Türkiye’nin para birimi nedir?",
+    "options": ["Euro", "Dolar", "Lira", "Sterlin"],
+    "answer": "Lira"
+  },
+  {
+    "question": "Bir futbol maçında kaç oyuncu sahaya çıkar?",
+    "options": ["9", "10", "11", "12"],
+    "answer": "11"
+  },
+  {
+    "question": "Elektrik birimi nedir?",
+    "options": ["Volt", "Watt", "Ohm", "Amper"],
+    "answer": "Volt"
+  },
+  {
+    "question": "Güneş sistemindeki en büyük gezegen hangisidir?",
+    "options": ["Satürn", "Jüpiter", "Mars", "Dünya"],
+    "answer": "Jüpiter"
+  },
+  {
+    "question": "Türkiye’de resmi dil hangisidir?",
+    "options": ["Kürtçe", "Arapça", "Türkçe", "İngilizce"],
+    "answer": "Türkçe"
+  },
+  {
+    "question": "Bir futbol sahası kaç kişiyle oynanır?",
+    "options": ["10", "11", "12", "13"],
+    "answer": "11"
+  },
+  {
+    "question": "Dünya’nın uydusu hangisidir?",
+    "options": ["Mars", "Venüs", "Ay", "Jüpiter"],
+    "answer": "Ay"
+  },
+  {
+    "question": "Bir insan kalbi kaç odacıktan oluşur?",
+    "options": ["2", "3", "4", "5"],
+    "answer": "4"
+  },
+  {
+    "question": "Türkiye’nin başkenti neresidir?",
+    "options": ["İstanbul", "Ankara", "İzmir", "Bursa"],
+    "answer": "Ankara"
+  },
+  {
+    "question": "Fotosentez hangi organizmalarda gerçekleşir?",
+    "options": ["Hayvanlar", "Bitkiler", "Mantarlar", "Bakteriler"],
+    "answer": "Bitkiler"
+  },
+  {
+    "question": "En uzun nehir hangisidir?",
+    "options": ["Nil", "Amazon", "Yangtze", "Mississippi"],
+    "answer": "Amazon"
+  },
+  {
+    "question": "Einstein’ın ünlü denklemi nedir?",
+    "options": ["E=mc²", "a²+b²=c²", "F=ma", "V=IR"],
+    "answer": "E=mc²"
+  },
+  {
+    "question": "Bir kilogram kaç grama eşittir?",
+    "options": ["100", "500", "1000", "1500"],
+    "answer": "1000"
+  },
+  {
+    "question": "Dünyanın en küçük kıtası hangisidir?",
+    "options": ["Avrupa", "Antarktika", "Avustralya", "Asya"],
+    "answer": "Avustralya"
+  },
+  {
+    "question": "Hangisi bir asal sayıdır?",
+    "options": ["4", "6", "7", "9"],
+    "answer": "7"
+  },
+  {
+    "question": "İnsan vücudunda en uzun kemik hangisidir?",
+    "options": ["Kürek kemiği", "Uyluk kemiği", "Kafatası", "Kol kemiği"],
+    "answer": "Uyluk kemiği"
+  },
+  {
+    "question": "Hangisi suyun donma noktasıdır?",
+    "options": ["0°C", "10°C", "−10°C", "20°C"],
+    "answer": "0°C"
+  },
+  {
+    "question": "H2O kimyasal formülü hangi madde içindir?",
+    "options": ["Tuz", "Su", "Şeker", "Hava"],
+    "answer": "Su"
+  },
+  {
+    "question": "Hangisi bir Güneş sistemi gezegenidir?",
+    "options": ["Plüton", "Venüs", "Satürn’ün halkası", "Ay"],
+    "answer": "Venüs"
+  },
+  {
+    "question": "İlk Nobel Barış Ödülü kim tarafından verilmiştir?",
+    "options": ["Alfred Nobel", "United Nations", "Barack Obama", "Martin Luther King"],
+    "answer": "Alfred Nobel"
+  },
+
+  // … (Devamı geliyor)
+
+  {
+    "question": "Hangi roman “Savaş ve Barış” kitabının yazarıdır?",
+    "options": ["Tolstoy", "Dostoyevski", "Hemingway", "Orwell"],
+    "answer": "Tolstoy"
+  },
+  {
+    "question": "Dünyada en çok konuşulan dil hangisidir?",
+    "options": ["İngilizce", "Çince", "İspanyolca", "Hintçe"],
+    "answer": "Çince"
+  },
+  {
+    "question": "Hangi gezegenin halkaları vardır?",
+    "options": ["Mars", "Venüs", "Jüpiter", "Satürn"],
+    "answer": "Satürn"
+  },
+  {
+    "question": "Hangisi bir yazılım lisansıdır?",
+    "options": ["GPL", "JPEG", "HTML", "CSS"],
+    "answer": "GPL"
+  },
+  {
+    "question": "Dünyanın en büyük çölü hangisidir?",
+    "options": ["Sahara", "Gobi", "Kalahari", "Mojave"],
+    "answer": "Sahara"
+  }
+{"question":"Dünyanın en büyük okyanusu hangisidir?","options":["Atlantik","Hint","Pasifik","Arktik"],"answer":"Pasifik","difficulty":"kolay"},
+{"question":"Fransa’nın başkenti neresidir?","options":["Lyon","Marseille","Paris","Nice"],"answer":"Paris","difficulty":"kolay"},
+{"question":"Işığın boşluktaki hızı yaklaşık olarak kaç km/s'dir?","options":["300,000","150,000","30,000","3,000"],"answer":"300,000","difficulty":"orta"},
+{"question":"Türkiye Cumhuriyeti’nin kurucusu kimdir?","options":["İnönü","Atatürk","Erdoğan","Bayar"],"answer":"Atatürk","difficulty":"kolay"},
+{"question":"En uzun süre tahtta kalan İngiliz monark kimdir?","options":["Victoria","Elizabeth II","Henry VIII","Edward III"],"answer":"Elizabeth II","difficulty":"zor"},
+{"question":"DNA’nın yapı taşı nedir?","options":["Nükleotit","Amino asit","Lipit","Şeker"],"answer":"Nükleotit","difficulty":"orta"},
+{"question":"Olympiyat Oyunları hangi ülkede doğmuştur?","options":["İtalya","Mısır","Yunanistan","Fransa"],"answer":"Yunanistan","difficulty":"kolay"},
+{"question":"Dünyanın en yüksek dağı hangisidir?","options":["K2","Kanchenjunga","Everest","Lhotse"],"answer":"Everest","difficulty":"kolay"},
+{"question":"Türkiye’nin en kalabalık şehri hangisidir?","options":["Ankara","İzmir","Bursa","İstanbul"],"answer":"İstanbul","difficulty":"kolay"},
+{"question":"Bir yıl kaç gündür?","options":["364","365","366","363"],"answer":"365","difficulty":"kolay"},
+{"question":"Ay’ın Dünya etrafında dolanma süresi yaklaşık kaç gündür?","options":["28","30","24","31"],"answer":"28","difficulty":"orta"},
+{"question":"Türkiye’nin para birimi nedir?","options":["Euro","Dolar","Lira","Sterlin"],"answer":"Lira","difficulty":"kolay"},
+{"question":"Bir futbol maçında kaç oyuncu sahaya çıkar?","options":["9","10","11","12"],"answer":"11","difficulty":"kolay"},
+{"question":"Elektrik birimi nedir?","options":["Volt","Watt","Ohm","Amper"],"answer":"Volt","difficulty":"orta"},
+{"question":"Güneş sistemindeki en büyük gezegen hangisidir?","options":["Satürn","Jüpiter","Mars","Dünya"],"answer":"Jüpiter","difficulty":"kolay"},
+{"question":"Türkiye’de resmi dil hangisidir?","options":["Kürtçe","Arapça","Türkçe","İngilizce"],"answer":"Türkçe","difficulty":"kolay"},
+{"question":"Bir futbol sahası kaç kişiyle oynanır?","options":["10","11","12","13"],"answer":"11","difficulty":"kolay"},
+{"question":"Dünya’nın uydusu hangisidir?","options":["Mars","Venüs","Ay","Jüpiter"],"answer":"Ay","difficulty":"kolay"},
+{"question":"Bir insan kalbi kaç odacıktan oluşur?","options":["2","3","4","5"],"answer":"4","difficulty":"orta"},
+{"question":"Türkiye’nin başkenti neresidir?","options":["İstanbul","Ankara","İzmir","Bursa"],"answer":"Ankara","difficulty":"kolay"},
+{"question":"Fotosentez hangi organizmalarda gerçekleşir?","options":["Hayvanlar","Bitkiler","Mantarlar","Bakteriler"],"answer":"Bitkiler","difficulty":"kolay"},
+{"question":"En uzun nehir hangisidir?","options":["Nil","Amazon","Yangtze","Mississippi"],"answer":"Amazon","difficulty":"orta"},
+{"question":"Einstein’ın ünlü denklemi nedir?","options":["E=mc²","a²+b²=c²","F=ma","V=IR"],"answer":"E=mc²","difficulty":"orta"},
+{"question":"Bir kilogram kaç grama eşittir?","options":["100","500","1000","1500"],"answer":"1000","difficulty":"kolay"},
+{"question":"Dünyanın en küçük kıtası hangisidir?","options":["Avrupa","Antarktika","Avustralya","Asya"],"answer":"Avustralya","difficulty":"kolay"},
+{"question":"Hangisi bir asal sayıdır?","options":["4","6","7","9"],"answer":"7","difficulty":"kolay"},
+{"question":"İnsan vücudunda en uzun kemik hangisidir?","options":["Kürek kemiği","Uyluk kemiği","Kafatası","Kol kemiği"],"answer":"Uyluk kemiği","difficulty":"orta"},
+{"question":"Hangisi suyun donma noktasıdır?","options":["0°C","10°C","−10°C","20°C"],"answer":"0°C","difficulty":"kolay"},
+{"question":"H2O kimyasal formülü hangi madde içindir?","options":["Tuz","Su","Şeker","Hava"],"answer":"Su","difficulty":"kolay"},
+{"question":"Hangisi bir Güneş sistemi gezegenidir?","options":["Plüton","Venüs","Satürn’ün halkası","Ay"],"answer":"Venüs","difficulty":"kolay"},
+{"question":"İlk Nobel Barış Ödülü kim tarafından verilmiştir?","options":["Alfred Nobel","United Nations","Barack Obama","Martin Luther King"],"answer":"Alfred Nobel","difficulty":"orta"}
+{"question":"Hangisi Dünya’nın en büyük çölüdür?","options":["Sahara","Gobi","Kalahari","Atacama"],"answer":"Sahara","difficulty":"kolay"},
+{"question":"Elektronun yük birimi nedir?","options":["Coulomb","Volt","Ampere","Ohm"],"answer":"Coulomb","difficulty":"orta"},
+{"question":"İlk insan hangi yılda aya gitmiştir?","options":["1965","1969","1971","1975"],"answer":"1969","difficulty":"kolay"},
+{"question":"Hangi elementin sembolü 'Fe'dir?","options":["Fermiyum","Flor","Demir","Fosfor"],"answer":"Demir","difficulty":"kolay"},
+{"question":"Mona Lisa tablosunun ressamı kimdir?","options":["Michelangelo","Raphael","Leonardo da Vinci","Donatello"],"answer":"Leonardo da Vinci","difficulty":"kolay"},
+{"question":"Bir insan vücudunda kaç böbrek vardır?","options":["1","2","3","4"],"answer":"2","difficulty":"kolay"},
+{"question":"Hangisi karasal bir gezegen değildir?","options":["Mars","Venüs","Jüpiter","Merkür"],"answer":"Jüpiter","difficulty":"orta"},
+{"question":"Türkçede kaç harf vardır?","options":["28","29","30","31"],"answer":"29","difficulty":"kolay"},
+{"question":"Hangisi bir memeli hayvandır?","options":["Kertenkele","Yunus","Timsah","Kuş"],"answer":"Yunus","difficulty":"kolay"},
+{"question":"Hangisi bir temel renklerden biridir?","options":["Mor","Siyah","Kırmızı","Beyaz"],"answer":"Kırmızı","difficulty":"kolay"},
+{"question":"Dünyanın en uzun nehri hangisidir?","options":["Amazon","Nil","Yangtze","Mississippi"],"answer":"Nil","difficulty":"orta"},
+{"question":"Bir ışık yılı nedir?","options":["Zaman birimi","Mesafe birimi","Hız birimi","Enerji birimi"],"answer":"Mesafe birimi","difficulty":"orta"},
+{"question":"Hangisi Türkiye’nin bir ili değildir?","options":["Trabzon","Bursa","Varşova","İzmir"],"answer":"Varşova","difficulty":"kolay"},
+{"question":"Hangisi bir kuş türüdür?","options":["Kanguru","Penguen","Timsah","Kaplumbağa"],"answer":"Penguen","difficulty":"kolay"},
+{"question":"İnsan vücudunda kaç parmak vardır?","options":["8","9","10","12"],"answer":"10","difficulty":"kolay"},
+{"question":"Hangisi bir Avrupa başkentidir?","options":["Tokyo","Paris","Ottawa","Kahire"],"answer":"Paris","difficulty":"kolay"},
+{"question":"Hangisi bir karasal hayvan değildir?","options":["Aslan","Kaplumbağa","Balina","Fil"],"answer":"Balina","difficulty":"orta"},
+{"question":"Hangi gezegen halkalarıyla ünlüdür?","options":["Jüpiter","Satürn","Mars","Venüs"],"answer":"Satürn","difficulty":"kolay"},
+{"question":"Su hangi sıcaklıkta donar?","options":["0°C","32°C","100°C","-1°C"],"answer":"0°C","difficulty":"kolay"},
+{"question":"Türkiye’nin en uzun nehri hangisidir?","options":["Kızılırmak","Fırat","Dicle","Sakarya"],"answer":"Kızılırmak","difficulty":"orta"},
+{"question":"Hangisi bir memeli değildir?","options":["Kedi","Yunus","Timsah","İnek"],"answer":"Timsah","difficulty":"kolay"},
+{"question":"Dünyanın en yüksek dağı hangisidir?","options":["Everest","K2","Kanchenjunga","Lhotse"],"answer":"Everest","difficulty":"kolay"},
+{"question":"Hangi elementin sembolü 'O'dur?","options":["Altın","Oksijen","Demir","Hidrojen"],"answer":"Oksijen","difficulty":"kolay"},
+{"question":"Hangi ülke Olimpiyat Oyunları’na ilk ev sahipliği yapmıştır?","options":["Yunanistan","Fransa","İngiltere","ABD"],"answer":"Yunanistan","difficulty":"orta"},
+{"question":"Güneş sistemi gezegenlerinden en küçüğü hangisidir?","options":["Mars","Venüs","Merkür","Plüton"],"answer":"Merkür","difficulty":"orta"},
+{"question":"Bir ışık yılı nedir?","options":["Zaman birimi","Mesafe birimi","Hız birimi","Enerji birimi"],"answer":"Mesafe birimi","difficulty":"orta"},
+{"question":"Hangisi bir Avrupa başkenti değildir?","options":["Berlin","Madrid","Tokyo","Londra"],"answer":"Tokyo","difficulty":"kolay"},
+{"question":"DNA açılımı nedir?","options":["Deoksiribonükleik Asit","Düşük Nükleer Asit","Doymuş Asit","Deoksiribonükleon"],"answer":"Deoksiribonükleik Asit","difficulty":"orta"},
+{"question":"Hangi gezegen kırmızı gezegen olarak bilinir?","options":["Venüs","Mars","Jüpiter","Merkür"],"answer":"Mars","difficulty":"kolay"},
+{"question":"İlk Nobel Fizik Ödülü hangi yılda verilmiştir?","options":["1901","1895","1910","1920"],"answer":"1901","difficulty":"zor"},
+{"question":"Hangisi bir memeli hayvandır?","options":["Yılan","Timsah","Fil","Kertenkele"],"answer":"Fil","difficulty":"kolay"},
+{"question":"İnsan vücudunda kaç parmak vardır?","options":["8","9","10","12"],"answer":"10","difficulty":"kolay"},
+{"question":"Hangi gezegen güneşe en yakın gezegendir?","options":["Venüs","Merkür","Mars","Dünya"],"answer":"Merkür","difficulty":"orta"},
+{"question":"Hangisi bir mikroorganizma değildir?","options":["Bakteri","Virüs","Mantar","Kedi"],"answer":"Kedi","difficulty":"kolay"},
+{"question":"Hangisi bir temel renk değildir?","options":["Kırmızı","Mavi","Sarı","Siyah"],"answer":"Siyah","difficulty":"orta"},
+{"question":"Hangisi bir tatlı su balığıdır?","options":["Somon","Alabalık","Hamsi","Ton"],"answer":"Alabalık","difficulty":"kolay"},
+{"question":"Dünya’nın en kalabalık ülkesi hangisidir?","options":["Hindistan","ABD","Çin","Rusya"],"answer":"Çin","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım dili değildir?","options":["Python","Java","Ruby","Tahta"],"answer":"Tahta","difficulty":"zor"},
+{"question":"Hangisi bir temel fizik büyüklüğü değildir?","options":["Kütle","Zaman","Hız","Akım"],"answer":"Hız","difficulty":"orta"},
+{"question":"Hangisi bir elektrik devresi elemanı değildir?","options":["Direnç","Kondansatör","Transistör","Demir"],"answer":"Demir","difficulty":"orta"},
+{"question":"Hangisi bir temel hak değildir?","options":["Yaşam hakkı","Özgürlük","Mülkiyet hakkı","Uçma hakkı"],"answer":"Uçma hakkı","difficulty":"zor"},
+{"question":"Hangisi bir element sembolüdür?","options":["Na","O","H","Su"],"answer":"Na","difficulty":"orta"},
+{"question":"Hangisi bir matematik işlemi değildir?","options":["Toplama","Çıkarma","Çarpma","Boya"],"answer":"Boya","difficulty":"kolay"},
+{"question":"Hangisi bir Nobel ödülü alan kişi değildir?","options":["Einstein","Marie Curie","Newton","Michael Jackson"],"answer":"Michael Jackson","difficulty":"zor"},
+{"question":"Hangisi bir ünlü fizikçi değildir?","options":["Newton","Einstein","Galileo","Picasso"],"answer":"Picasso","difficulty":"orta"},
+{"question":"Hangisi bir Fransız yemeği değildir?","options":["Croissant","Baguette","Sushi","Ratatouille"],"answer":"Sushi","difficulty":"orta"},
+{"question":"Hangisi bir efsanevi yaratık değildir?","options":["Dragon","Unicorn","Griffin","Köpek"],"answer":"Köpek","difficulty":"kolay"},
+{"question":"Hangisi bir gezegen uydusu değildir?","options":["Europa","Titan","Ay","Güneş"],"answer":"Güneş","difficulty":"orta"},
+{"question":"Hangisi bir temel bilim dalı değildir?","options":["Matematik","Fizik","Kimya","Resim"],"answer":"Resim","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım türü değildir?","options":["Antivirüs","Ofis Yazılımı","Bilgisayar","Veritabanı Yazılımı"],"answer":"Bilgisayar","difficulty":"orta"},
+{"question":"Hangisi bir doğa olayı değildir?","options":["Deprem","Volkan","Tornado","Laptop"],"answer":"Laptop","difficulty":"kolay"},
+{"question":"Hangisi bir spor dalı değildir?","options":["Futbol","Basketbol","Saklambaç","Voleybol"],"answer":"Saklambaç","difficulty":"kolay"},
+{"question":"Hangisi bir matematik sabiti değildir?","options":["Pi","e","G","Phi"],"answer":"G","difficulty":"orta"},
+{"question":"Hangisi bir bilgisayar bileşeni değildir?","options":["RAM","CPU","Monitor","Silisyum"],"answer":"Silisyum","difficulty":"orta"},
+{"question":"Hangisi bir renk değildir?","options":["Kırmızı","Yeşil","Mavi","Koltuk"],"answer":"Koltuk","difficulty":"kolay"},
+{"question":"Hangisi bir deniz değildir?","options":["Akdeniz","Karadeniz","Hazar","Nil"],"answer":"Nil","difficulty":"orta"},
+{"question":"Hangisi bir Avrupa başkenti değildir?","options":["Berlin","Madrid","Tokyo","Londra"],"answer":"Tokyo","difficulty":"kolay"},
+{"question":"Hangisi bir Türk şehri değildir?","options":["İzmir","Ankara","Bursa","Moskova"],"answer":"Moskova","difficulty":"kolay"},
+{"question":"Hangisi bir meyve değildir?","options":["Elma","Armut","Domates","Havuç"],"answer":"Havuç","difficulty":"kolay"},
+{"question":"Hangisi bir sebze değildir?","options":["Kabak","Patates","Marul","Mango"],"answer":"Mango","difficulty":"kolay"},
+{"question":"Hangisi bir enerji kaynağı değildir?","options":["Güneş","Rüzgar","Su","Tahta"],"answer":"Tahta","difficulty":"orta"},
+{"question":"Hangisi bir Türk kahramandır?","options":["Dede Korkut","Kral Arthur","Hercules","Achilles"],"answer":"Dede Korkut","difficulty":"kolay"},
+{"question":"Hangisi bir müzik aleti değildir?","options":["Gitar","Piyano","Davul","Masa"],"answer":"Masa","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım dili değildir?","options":["Python","Java","Ruby","Mermer"],"answer":"Mermer","difficulty":"zor"},
+{"question":"Hangisi bir gezegen değildir?","options":["Mars","Venüs","Plüton","Titan"],"answer":"Titan","difficulty":"orta"},
+{"question":"Hangisi bir temel renk değildir?","options":["Kırmızı","Mavi","Sarı","Siyah"],"answer":"Siyah","difficulty":"orta"},
+{"question":"Hangisi bir hava olayı değildir?","options":["Yağmur","Kar","Rüzgar","Kaya"],"answer":"Kaya","difficulty":"kolay"},
+{"question":"Hangisi bir canlı değildir?","options":["Ağaç","Kedi","Mantar","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"Hangisi bir hayvan değildir?","options":["Aslan","Kaplan","Zebra","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"Hangisi bir gezegen değildir?","options":["Mars","Venüs","Plüton","Ay"],"answer":"Ay","difficulty":"orta"}
+{"question":"Hangisi bir Dünya kıtası değildir?","options":["Asya","Avrupa","Atlantis","Afrika"],"answer":"Atlantis","difficulty":"zor"},
+{"question":"Hangi gezegen halkalarıyla ünlüdür?","options":["Jüpiter","Satürn","Mars","Venüs"],"answer":"Satürn","difficulty":"kolay"},
+{"question":"Bir yıl kaç gündür?","options":["364","365","366","360"],"answer":"365","difficulty":"kolay"},
+{"question":"Hangisi bir temel renk değildir?","options":["Kırmızı","Mavi","Sarı","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"İlk Nobel Ödülü hangi yılda verilmiştir?","options":["1901","1895","1910","1920"],"answer":"1901","difficulty":"orta"},
+{"question":"Hangi elementin sembolü 'H' dir?","options":["Helyum","Hidrojen","Altın","Hafniyum"],"answer":"Hidrojen","difficulty":"kolay"},
+{"question":"Türkiye’nin en uzun nehri hangisidir?","options":["Kızılırmak","Fırat","Dicle","Sakarya"],"answer":"Kızılırmak","difficulty":"orta"},
+{"question":"Dünyanın en yüksek dağı hangisidir?","options":["Everest","K2","Kanchenjunga","Lhotse"],"answer":"Everest","difficulty":"kolay"},
+{"question":"Hangisi bir memeli değildir?","options":["Kedi","Yunus","Timsah","İnek"],"answer":"Timsah","difficulty":"kolay"},
+{"question":"Hangisi bir mikroorganizma değildir?","options":["Bakteri","Virüs","Mantar","Kedi"],"answer":"Kedi","difficulty":"kolay"},
+{"question":"Hangisi bir Nobel ödülü alan kişi değildir?","options":["Einstein","Marie Curie","Newton","Michael Jackson"],"answer":"Michael Jackson","difficulty":"zor"},
+{"question":"Hangisi bir Avrupa başkenti değildir?","options":["Berlin","Madrid","Tokyo","Londra"],"answer":"Tokyo","difficulty":"kolay"},
+{"question":"Hangisi bir karasal hayvan değildir?","options":["Aslan","Kaplumbağa","Balina","Fil"],"answer":"Balina","difficulty":"orta"},
+{"question":"Hangisi bir gezegen uydusu değildir?","options":["Europa","Titan","Ay","Güneş"],"answer":"Güneş","difficulty":"orta"},
+{"question":"Hangisi bir temel fizik büyüklüğü değildir?","options":["Kütle","Zaman","Hız","Akım"],"answer":"Hız","difficulty":"orta"},
+{"question":"Hangisi bir bilgisayar bileşeni değildir?","options":["RAM","CPU","Monitor","Silisyum"],"answer":"Silisyum","difficulty":"orta"},
+{"question":"Hangisi bir spor dalı değildir?","options":["Futbol","Basketbol","Saklambaç","Voleybol"],"answer":"Saklambaç","difficulty":"kolay"},
+{"question":"Hangisi bir tatlı su balığıdır?","options":["Somon","Alabalık","Hamsi","Ton"],"answer":"Alabalık","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım dili değildir?","options":["Python","Java","Ruby","Mermer"],"answer":"Mermer","difficulty":"zor"},
+{"question":"Hangisi bir efsanevi yaratık değildir?","options":["Dragon","Unicorn","Griffin","Köpek"],"answer":"Köpek","difficulty":"kolay"},
+{"question":"Hangisi bir temel bilim dalı değildir?","options":["Matematik","Fizik","Kimya","Resim"],"answer":"Resim","difficulty":"kolay"},
+{"question":"Hangisi bir Nobel ödülü alan kişi değildir?","options":["Einstein","Marie Curie","Newton","Michael Jordan"],"answer":"Michael Jordan","difficulty":"zor"},
+{"question":"Hangisi bir ünlü fizikçi değildir?","options":["Newton","Einstein","Galileo","Picasso"],"answer":"Picasso","difficulty":"orta"},
+{"question":"Hangisi bir Fransız yemeği değildir?","options":["Croissant","Baguette","Sushi","Ratatouille"],"answer":"Sushi","difficulty":"orta"},
+{"question":"Hangisi bir gezegen değildir?","options":["Mars","Venüs","Plüton","Titan"],"answer":"Titan","difficulty":"orta"},
+{"question":"Hangisi bir meyve değildir?","options":["Elma","Armut","Domates","Havuç"],"answer":"Havuç","difficulty":"kolay"},
+{"question":"Hangisi bir sebze değildir?","options":["Kabak","Patates","Marul","Mango"],"answer":"Mango","difficulty":"kolay"},
+{"question":"Hangisi bir doğa olayı değildir?","options":["Deprem","Volkan","Tornado","Laptop"],"answer":"Laptop","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım türü değildir?","options":["Antivirüs","Ofis Yazılımı","Bilgisayar","Veritabanı Yazılımı"],"answer":"Bilgisayar","difficulty":"orta"},
+{"question":"Hangisi bir temel renklerden biridir?","options":["Kırmızı","Yeşil","Mavi","Kahverengi"],"answer":"Kırmızı","difficulty":"kolay"},
+{"question":"Hangisi bir kuş türüdür?","options":["Kanguru","Penguen","Timsah","Kaplumbağa"],"answer":"Penguen","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım dili değildir?","options":["Python","Java","Ruby","Tahta"],"answer":"Tahta","difficulty":"zor"},
+{"question":"Hangisi bir gezegen halkasına sahip değildir?","options":["Jüpiter","Satürn","Mars","Uranüs"],"answer":"Mars","difficulty":"orta"},
+{"question":"Hangisi bir temel hak değildir?","options":["Yaşam hakkı","Özgürlük","Mülkiyet hakkı","Uçma hakkı"],"answer":"Uçma hakkı","difficulty":"zor"},
+{"question":"Hangisi bir sporcu değildir?","options":["Messi","Ronaldo","LeBron James","Einstein"],"answer":"Einstein","difficulty":"zor"},
+{"question":"Hangisi bir matematik sabiti değildir?","options":["Pi","e","G","Phi"],"answer":"G","difficulty":"orta"},
+{"question":"Hangisi bir renk değildir?","options":["Kırmızı","Yeşil","Mavi","Koltuk"],"answer":"Koltuk","difficulty":"kolay"},
+{"question":"Hangisi bir deniz değildir?","options":["Akdeniz","Karadeniz","Hazar","Nil"],"answer":"Nil","difficulty":"orta"},
+{"question":"Hangisi bir temel bilim dalı değildir?","options":["Matematik","Fizik","Kimya","Resim"],"answer":"Resim","difficulty":"kolay"},
+{"question":"Hangisi bir enerji kaynağı değildir?","options":["Güneş","Rüzgar","Su","Tahta"],"answer":"Tahta","difficulty":"orta"},
+{"question":"Hangisi bir yazılım bileşeni değildir?","options":["CPU","RAM","Monitor","Taş"],"answer":"Taş","difficulty":"orta"},
+{"question":"Hangisi bir meyve değildir?","options":["Elma","Armut","Kiraz","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"Hangisi bir sebze değildir?","options":["Kabak","Patates","Havuç","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"Hangisi bir yazılım türü değildir?","options":["Antivirüs","Ofis Yazılımı","Bilgisayar","Mermer"],"answer":"Mermer","difficulty":"zor"},
+{"question":"Hangisi bir hayvan değildir?","options":["Aslan","Kaplan","Zebra","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"Hangisi bir canlı değildir?","options":["Ağaç","Kedi","Mantar","Taş"],"answer":"Taş","difficulty":"kolay"},
+{"question":"Hangisi bir gezegen değildir?","options":["Mars","Venüs","Plüton","Ay"],"answer":"Ay","difficulty":"orta"},
+{"question":"Hangisi bir spor dalı değildir?","options":["Futbol","Basketbol","Saklambaç","Voleybol"],"answer":"Saklambaç","difficulty":"kolay"},
+{"question":"Hangisi bir kuş türüdür?","options":["Kartal","Penguen","Timsah","Kaplumbağa"],"answer":"Penguen","difficulty":"kolay"},
+{"question":"Hangisi bir temel renk değildir?","options":["Kırmızı","Mavi","Sarı","Siyah"],"answer":"Siyah","difficulty":"orta"},
+{"question":"Hangisi bir mikroorganizma değildir?","options":["Bakteri","Virüs","Mantar","Kedi"],"answer":"Kedi","difficulty":"kolay"},
+{"question":"Hangisi bir Nobel ödülü alan kişi değildir?","options":["Einstein","Marie Curie","Newton","Michael Jackson"],"answer":"Michael Jackson","difficulty":"zor"},
+{"question":"Hangisi bir Fransız yemeği değildir?","options":["Croissant","Baguette","Sushi","Ratatouille"],"answer":"Sushi","difficulty":"orta"},
+{"question":"Hangisi bir efsanevi yaratık değildir?","options":["Dragon","Unicorn","Griffin","Köpek"],"answer":"Köpek","difficulty":"kolay"}
