@@ -1,0 +1,16 @@
+{
+  "name": "telegram-quiz-bot",
+  "description": "Geniş çaplı Telegram mini quiz botu",
+  "repository": "https://github.com/kullanici/quiz-bot",
+  "env": {
+    "TOKEN": {
+      "description": "Telegram bot token",
+      "required": true
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
