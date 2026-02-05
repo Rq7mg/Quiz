@@ -2,7 +2,7 @@ import os
 import json
 import random
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters, CommandHandler
 
 # -----------------------
 # Ayarlar
@@ -39,10 +39,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # -----------------------
-# .quiz komutu
+# Tek handler: quiz, add, score, cevap
 # -----------------------
-async def quiz_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text
+async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.strip()
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+
+    # .quiz komutu
     if text.lower().startswith(".quiz"):
         if not QUESTIONS:
             await update.message.reply_text("⚠️ Quiz soruları yüklenemedi!")
@@ -53,61 +57,16 @@ async def quiz_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         for idx, opt in enumerate(options, 1):
             msg += f"{idx}. {opt}\n"
         await update.message.reply_text(msg)
-
-        # Chat bazında doğru cevabı ve cevap veren kullanıcıları sakla
-        CURRENT_QUESTIONS[update.message.chat_id] = {
+        CURRENT_QUESTIONS[chat_id] = {
             "answer": soru["answer"].strip().lower(),
             "answered_users": set()
         }
+        return
 
-# -----------------------
-# Kullanıcı cevabını kontrol et
-# -----------------------
-async def check_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    text = update.message.text.strip().lower()
-
-    if chat_id not in CURRENT_QUESTIONS:
-        return  # Bu chat’te soru yok
-
-    soru_data = CURRENT_QUESTIONS[chat_id]
-
-    # Daha önce cevap vermiş mi?
-    if user_id in soru_data["answered_users"]:
-        return  # Tek cevap hakkı
-
-    # Cevabı kontrol et
-    correct_answer = soru_data["answer"]
-    if text == correct_answer or text == str(ord(correct_answer.lower()) - 96):  # A->1, B->2
-        # Puan ver
-        USER_SCORES[user_id] = USER_SCORES.get(user_id, 0) + 1
-        await update.message.reply_text(f"✅ Doğru! Puanın: {USER_SCORES[user_id]}")
-    else:
-        await update.message.reply_text(f"❌ Yanlış! Doğru cevap: {correct_answer.upper()}")
-
-    # Kullanıcıyı işaretle
-    soru_data["answered_users"].add(user_id)
-
-    # Eğer tüm kullanıcılar cevapladıysa veya istenirse soruyu silebiliriz
-    # CURRENT_QUESTIONS.pop(chat_id)  # opsiyonel: soruyu sil
-
-# -----------------------
-# .score komutu
-# -----------------------
-async def score(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.message.from_user.id
-    score = USER_SCORES.get(user_id, 0)
-    await update.message.reply_text(f"📊 Puanınız: {score}")
-
-# -----------------------
-# .add komutu
-# -----------------------
-async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text
+    # .add komutu
     if text.lower().startswith(".add"):
         try:
-            content = text[4:].strip()  # .add kısmını at
+            content = text[4:].strip()
             soru, opts, answer, difficulty = content.split("|")
             options = [o.strip() for o in opts.split(",")]
             soru_dict = {
@@ -124,27 +83,35 @@ async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(
                 "❌ Hatalı format! Örnek:\n.add Soru | A,B,C,D | Cevap | zor"
             )
+        return
 
-# -----------------------
-# Main
-# -----------------------
-def main():
-    app = ApplicationBuilder().token(TOKEN).build()
+    # .score komutu
+    if text.lower() == ".score":
+        score = USER_SCORES.get(user_id, 0)
+        await update.message.reply_text(f"📊 Puanınız: {score}")
+        return
 
-    from telegram.ext import CommandHandler, MessageHandler, filters
+    # Cevap kontrolü
+    if chat_id in CURRENT_QUESTIONS:
+        soru_data = CURRENT_QUESTIONS[chat_id]
 
-    # Komutlar
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, quiz_command))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, add_command))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, check_answer))
-    app.add_handler(MessageHandler(filters.Regex(r"^\.score$"), score))  # .score komutu
+        # Daha önce cevap vermiş mi?
+        if user_id in soru_data["answered_users"]:
+            return
 
-    print("Bot başlatıldı...")
-    app.run_polling()
+        correct_answer = soru_data["answer"]
 
-# -----------------------
-# Entry
-# -----------------------
-if __name__ == "__main__":
-    main()
+        # A->1, B->2, C->3, D->4 kontrolü
+        mapping = {"a": "1", "b": "2", "c": "3", "d": "4"}
+        user_text = text.lower()
+        if user_text in mapping:
+            user_text = mapping[user_text]
+
+        if user_text == correct_answer.lower() or user_text == str(ord(correct_answer.lower()) - 96):
+            USER_SCORES[user_id] = USER_SCORES.get(user_id, 0) + 1
+            await update.message.reply_text(f"✅ Doğru! Puanınız: {USER_SCORES[user_id]}")
+        else:
+            await update.message.reply_text(f"❌ Yanlış! Doğru cevap: {correct_answer.upper()}")
+
+        # Kullanıcıyı işaretle
+        soru_data["answered_users"].add(user_id)
