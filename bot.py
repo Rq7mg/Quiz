@@ -2,7 +2,7 @@ import os
 import json
 import random
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
 # -----------------------
 # Ayarlar
@@ -27,57 +27,62 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📚 Quiz Bot hazır!\n\n"
         "Komutlar:\n"
         ".quiz → Rastgele soru başlat\n"
-        ".add <soru> | <A,B,C,D> | <cevap> | <zor/orta/kolay> → Admin için yeni soru ekleme"
     )
 
 # -----------------------
 # .quiz komutu
 # -----------------------
-async def quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not QUESTIONS:
-        await update.message.reply_text("⚠️ Quiz soruları yüklenemedi!")
-        return
-
-    soru = random.choice(QUESTIONS)
-    options = soru["options"]
-    msg = f"❓ {soru['question']}\n\n"
-    for idx, opt in enumerate(options, 1):
-        msg += f"{idx}. {opt}\n"
-    await update.message.reply_text(msg)
-
-# -----------------------
-# .add komutu (admin)
-# -----------------------
-async def add_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = " ".join(context.args)
-    try:
-        soru, opts, answer, difficulty = text.split("|")
-        options = [o.strip() for o in opts.split(",")]
-        soru_dict = {
-            "question": soru.strip(),
-            "options": options,
-            "answer": answer.strip(),
-            "difficulty": difficulty.strip()
-        }
-        QUESTIONS.append(soru_dict)
-        with open(QUESTIONS_FILE, "w", encoding="utf-8") as f:
-            json.dump(QUESTIONS, f, ensure_ascii=False, indent=2)
-        await update.message.reply_text("✅ Soru eklendi!")
-    except Exception:
-        await update.message.reply_text(
-            "❌ Hatalı format! Örnek:\n.add Soru | A,B,C,D | Cevap | zor"
-        )
+async def quiz_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text
+    if text.lower().startswith(".quiz"):
+        if not QUESTIONS:
+            await update.message.reply_text("⚠️ Quiz soruları yüklenemedi!")
+            return
+        soru = random.choice(QUESTIONS)
+        options = soru["options"]
+        msg = f"❓ {soru['question']}\n\n"
+        for idx, opt in enumerate(options, 1):
+            msg += f"{idx}. {opt}\n"
+        await update.message.reply_text(msg)
 
 # -----------------------
-# Ana fonksiyon
+# .add komutu
+# -----------------------
+async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text
+    if text.lower().startswith(".add"):
+        try:
+            content = text[4:].strip()  # .add kısmını at
+            soru, opts, answer, difficulty = content.split("|")
+            options = [o.strip() for o in opts.split(",")]
+            soru_dict = {
+                "question": soru.strip(),
+                "options": options,
+                "answer": answer.strip(),
+                "difficulty": difficulty.strip()
+            }
+            QUESTIONS.append(soru_dict)
+            with open(QUESTIONS_FILE, "w", encoding="utf-8") as f:
+                json.dump(QUESTIONS, f, ensure_ascii=False, indent=2)
+            await update.message.reply_text("✅ Soru eklendi!")
+        except Exception:
+            await update.message.reply_text(
+                "❌ Hatalı format! Örnek:\n.add Soru | A,B,C,D | Cevap | zor"
+            )
+
+# -----------------------
+# Main
 # -----------------------
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
-    # Komutlar
+    # /start komutu için MessageHandler yerine CommandHandler kullanabiliriz
+    from telegram.ext import CommandHandler
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("quiz", quiz))
-    app.add_handler(CommandHandler("add", add_question))
+
+    # .quiz ve .add komutlarını MessageHandler ile yakala
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, quiz_command))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, add_command))
 
     print("Bot başlatıldı...")
     app.run_polling()
