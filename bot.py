@@ -1,87 +1,96 @@
-
 import os
 import json
 import random
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
+# -----------------------
+# Ayarlar
+# -----------------------
 TOKEN = os.environ.get("TOKEN")
+ADMIN_IDS = [int(x) for x in os.environ.get("ADMIN_IDS", "").split(",")]
 
-quiz_state = {}
+QUESTIONS_FILE = "questions.json"
 
-# -------------------------
-# Soru havuzu
-# -------------------------
-with open("questions.json", "r", encoding="utf-8") as f:
-    QUESTIONS = json.load(f)
+# -----------------------
+# Soruları yükle
+# -----------------------
+def load_questions():
+    with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-# -------------------------
-# /quiz başlat
-# -------------------------
+QUESTIONS = load_questions()
+
+# -----------------------
+# /start komutu
+# -----------------------
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📚 Quiz Bot hazır!\n\n"
+        "Komutlar:\n"
+        ".quiz → Rastgele soru başlat\n"
+        ".add <soru> | <A,B,C,D> | <cevap> | <zor/orta/kolay> → Admin için yeni soru ekleme"
+    )
+
+# -----------------------
+# .quiz komutu
+# -----------------------
 async def quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_user.id
-    question = random.choice(QUESTIONS)
-    quiz_state[user_id] = {"question": question, "score": quiz_state.get(user_id, {}).get("score", 0)}
+    soru = random.choice(QUESTIONS)
+    options = soru["options"]
+    msg = f"❓ {soru['question']}\n\n"
+    for idx, opt in enumerate(options, 1):
+        msg += f"{idx}. {opt}\n"
+    await update.message.reply_text(msg)
 
-    buttons = [[InlineKeyboardButton(opt, callback_data=opt)] for opt in question["options"]]
-    reply_markup = InlineKeyboardMarkup(buttons)
-
-    await update.message.reply_text(f"❓ {question['question']}", reply_markup=reply_markup)
-
-# -------------------------
-# Buton callback
-# -------------------------
-async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    user_id = query.from_user.id
-
-    if user_id not in quiz_state:
-        await query.edit_message_text("❌ Quiz başlamadı. `.quiz` komutu ile başlat.")
+# -----------------------
+# .add komutu (admin)
+# -----------------------
+async def add_question(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.from_user.id
+    if user_id not in ADMIN_IDS:
+        await update.message.reply_text("❌ Bu komutu sadece adminler kullanabilir.")
         return
 
-    correct_answer = quiz_state[user_id]["question"]["answer"]
+    text = " ".join(context.args)
+    try:
+        soru, opts, answer, difficulty = text.split("|")
+        options = [o.strip() for o in opts.split(",")]
+        soru_dict = {
+            "question": soru.strip(),
+            "options": options,
+            "answer": answer.strip(),
+            "difficulty": difficulty.strip()
+        }
+        QUESTIONS.append(soru_dict)
+        with open(QUESTIONS_FILE, "w", encoding="utf-8") as f:
+            json.dump(QUESTIONS, f, ensure_ascii=False, indent=2)
+        await update.message.reply_text("✅ Soru eklendi!")
+    except Exception:
+        await update.message.reply_text(
+            "❌ Hatalı format! Örnek:\n.add Soru | A,B,C,D | Cevap | zor"
+        )
 
-    if query.data == correct_answer:
-        quiz_state[user_id]["score"] += 1
-        text = f"✅ Doğru! Puanın: {quiz_state[user_id]['score']}"
-    else:
-        text = f"❌ Yanlış! Doğru cevap: {correct_answer}\nPuanın: {quiz_state[user_id]['score']}"
-
-    await query.edit_message_text(text)
-
-# -------------------------
-# /score
-# -------------------------
-async def score(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_user.id
-    score = quiz_state.get(user_id, {}).get("score", 0)
-    await update.message.reply_text(f"📊 Puanın: {score}")
-
-# -------------------------
-# /stopquiz
-# -------------------------
-async def stopquiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_user.id
-    if user_id in quiz_state:
-        quiz_state.pop(user_id)
-        await update.message.reply_text("⛔ Quiz durduruldu")
-    else:
-        await update.message.reply_text("❌ Önce quiz başlatmalısın")
-
-# -------------------------
-# MAIN
-# -------------------------
+# -----------------------
+# Main
+# -----------------------
 def main():
+    # Uygulamayı başlat
     app = ApplicationBuilder().token(TOKEN).build()
 
+    # Komutlar
+    app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("quiz", quiz))
-    app.add_handler(CallbackQueryHandler(button))
-    app.add_handler(CommandHandler("score", score))
-    app.add_handler(CommandHandler("stopquiz", stopquiz))
+    app.add_handler(CommandHandler("add", add_question))
 
-    print("Quiz bot başlatıldı...")
+    # Mesajları engelleme (opsiyonel)
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, lambda u,c: None))
+
+    print("Bot başlatıldı...")
     app.run_polling()
 
+# -----------------------
+# Entry point
+# -----------------------
 if __name__ == "__main__":
     main()
