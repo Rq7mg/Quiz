@@ -1,123 +1,128 @@
 import os
 import json
 import random
+import asyncio
 from telegram import Update
-from telegram.ext import (
-    ApplicationBuilder,
-    ContextTypes,
-    CommandHandler,
-    MessageHandler,
-    filters
-)
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
 TOKEN = os.environ.get("TOKEN")
+ADMIN_IDS = [6563936773, 6030484208]  # kendi admin id'lerin
+
+QUESTION_TIME = 20  # saniye
 QUESTIONS_FILE = "questions.json"
 
-def load_questions():
-    with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
+    QUESTIONS = json.load(f)
 
-QUESTIONS = load_questions()
-
-CURRENT_QUESTIONS = {}   # chat_id -> {answer, answered}
-USER_SCORES = {}         # user_id -> score
-USER_NAMES = {}          # user_id -> name
+GAMES = {}      # chat_id -> game state
+SCORES = {}     # chat_id -> {user_id: score}
+USERNAMES = {}  # user_id -> name
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "🎯 Quiz Bot\n\n"
-        ".quiz → Rastgele soru\n"
-        "Cevap: A/B/C/D veya 1/2/3/4\n"
-        ".score → Kendi puanın\n"
-        ".leaderboard → En iyiler"
-    )
+async def send_question(chat_id, context):
+    q = random.choice(QUESTIONS)
+
+    text = f"❓ {q['question']}\n\n"
+    for i, opt in enumerate(q["options"], 1):
+        text += f"{i}. {opt}\n"
+
+    await context.bot.send_message(chat_id, text)
+
+    GAMES[chat_id] = {
+        "answer": q["answer"],
+        "answers": {},  # user_id -> given answer
+        "correct": set()
+    }
+
+    await asyncio.sleep(QUESTION_TIME)
+
+    game = GAMES.get(chat_id)
+    if not game:
+        return
+
+    for uid, ans in game["answers"].items():
+        if ans == game["answer"]:
+            game["correct"].add(uid)
+            SCORES.setdefault(chat_id, {})
+            SCORES[chat_id][uid] = SCORES[chat_id].get(uid, 0) + 1
+
+    if game["correct"]:
+        users = "\n".join(
+            f"@{USERNAMES.get(uid, uid)}"
+            for uid in game["correct"]
+        )
+        msg = f"⏰ Süre doldu!\n✅ Doğru cevap: {game['answer'].upper()}\n\n🎉 Doğru bilenler:\n{users}"
+    else:
+        msg = f"⏰ Süre doldu!\n✅ Doğru cevap: {game['answer'].upper()}\n\n❌ Kimse doğru bilemedi."
+
+    await context.bot.send_message(chat_id, msg)
+
+    if chat_id in GAMES:
+        await send_question(chat_id, context)
 
 
 async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text.strip()
+    if not update.message:
+        return
+
     chat_id = update.message.chat_id
     user = update.message.from_user
     user_id = user.id
+    text = update.message.text.strip().lower()
 
-    USER_NAMES[user_id] = user.username or f"User {user_id}"
+    USERNAMES[user_id] = user.username or f"user{user_id}"
 
-    # Quiz
-    if text.lower() == ".quiz":
-        q = random.choice(QUESTIONS)
-
-        msg = f"❓ {q['question']}\n\n"
-        for i, opt in enumerate(q["options"], 1):
-            msg += f"{i}. {opt}\n"
-
-        await update.message.reply_text(msg)
-
-        CURRENT_QUESTIONS[chat_id] = {
-            "answer": q["answer"].lower(),
-            "answered": set()
-        }
+    # ADMIN KOMUTLARI
+    if text == ".quiz" and user_id in ADMIN_IDS:
+        if chat_id in GAMES:
+            return
+        await context.bot.send_message(chat_id, "🎮 Quiz başladı!")
+        await send_question(chat_id, context)
         return
 
-    # Score
-    if text.lower() == ".score":
-        score = USER_SCORES.get(user_id, 0)
-        await update.message.reply_text(f"📊 Puanın: {score}")
-        return
-
-    # Leaderboard
-    if text.lower() == ".leaderboard":
-        if not USER_SCORES:
-            await update.message.reply_text("Henüz skor yok.")
+    if text == ".son" and user_id in ADMIN_IDS:
+        if chat_id not in GAMES:
             return
 
-        sorted_scores = sorted(
-            USER_SCORES.items(),
-            key=lambda x: x[1],
-            reverse=True
-        )[:10]
+        del GAMES[chat_id]
+
+        scores = SCORES.get(chat_id, {})
+        if not scores:
+            await context.bot.send_message(chat_id, "Oyun bitti.\nKimse puan alamadı.")
+            return
+
+        sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
 
         msg = "🏆 Leaderboard\n\n"
-        for i, (uid, score) in enumerate(sorted_scores, 1):
-            name = USER_NAMES.get(uid, f"User {uid}")
-            msg += f"{i}. @{name} — {score} puan\n"
+        for i, (uid, score) in enumerate(sorted_scores[:10], 1):
+            msg += f"{i}. @{USERNAMES.get(uid, uid)} — {score} puan\n"
 
-        await update.message.reply_text(msg)
+        await context.bot.send_message(chat_id, msg)
         return
 
-    # Cevap kontrolü
-    if chat_id not in CURRENT_QUESTIONS:
+    # CEVAP KONTROLÜ
+    if chat_id not in GAMES:
         return
 
-    q = CURRENT_QUESTIONS[chat_id]
+    game = GAMES[chat_id]
 
-    if user_id in q["answered"]:
+    if user_id in game["answers"]:
         return
 
-    ans = text.lower()
     convert = {"1": "a", "2": "b", "3": "c", "4": "d"}
-    if ans in convert:
-        ans = convert[ans]
+    if text in convert:
+        text = convert[text]
 
-    if ans == q["answer"]:
-        USER_SCORES[user_id] = USER_SCORES.get(user_id, 0) + 1
-        await update.message.reply_text("✅ Doğru!")
-    else:
-        await update.message.reply_text(f"❌ Yanlış! Doğru cevap: {q['answer'].upper()}")
+    if text not in ["a", "b", "c", "d"]:
+        return
 
-    q["answered"].add(user_id)
+    game["answers"][user_id] = text
 
 
 def main():
-    if not TOKEN:
-        print("TOKEN bulunamadı!")
-        return
-
     app = ApplicationBuilder().token(TOKEN).build()
-
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
-
-    print("🤖 Bot çalışıyor...")
+    app.add_handler(MessageHandler(filters.TEXT, message_handler))
+    print("🤖 Quiz bot çalışıyor...")
     app.run_polling()
 
 
