@@ -2,7 +2,7 @@
   "name": "quiz-bot",
   "description": "Telegram quiz bot with 1000 questions",
   "repository": "https://github.com/kullanici/quiz-bot",
-  "stack": "heroku-20",
+  "stack": "heroku-22",
   "env": {
     "TOKEN": {
       "description": "Telegram bot token",
