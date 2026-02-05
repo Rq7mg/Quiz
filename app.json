@@ -1,16 +1,21 @@
 {
-  "name": "telegram-quiz-bot",
-  "description": "Geniş çaplı Telegram mini quiz botu",
+  "name": "quiz-bot",
+  "description": "Telegram quiz bot with 1000 questions",
   "repository": "https://github.com/kullanici/quiz-bot",
+  "stack": "heroku-20",
   "env": {
     "TOKEN": {
       "description": "Telegram bot token",
       "required": true
+    },
+    "ADMIN_IDS": {
+      "description": "Comma separated admin user IDs (örnek: 123456789,987654321)",
+      "required": true
     }
   },
-  "buildpacks": [
-    {
-      "url": "heroku/python"
+  "formation": {
+    "worker": {
+      "quantity": 1
     }
-  ]
+  }
 }
