@@ -3,12 +3,18 @@ import json
 import random
 import asyncio
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
+from telegram.ext import (
+    ApplicationBuilder,
+    ContextTypes,
+    MessageHandler,
+    CommandHandler,
+    filters
+)
 
 TOKEN = os.environ.get("TOKEN")
-ADMIN_IDS = [6563936773, 6030484208]  # kendi admin id'lerin
+ADMIN_IDS = [6563936773, 6030484208]
 
-QUESTION_TIME = 20  # saniye
+QUESTION_TIME = 20
 QUESTIONS_FILE = "questions.json"
 
 with open(QUESTIONS_FILE, "r", encoding="utf-8") as f:
@@ -19,6 +25,20 @@ SCORES = {}     # chat_id -> {user_id: score}
 USERNAMES = {}  # user_id -> name
 
 
+# ---------- START ----------
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🎮 Süreli Quiz Botu\n\n"
+        "Admin komutları:\n"
+        ".quiz → Oyunu başlat\n"
+        ".son → Oyunu bitir\n\n"
+        "Cevaplar:\n"
+        "A/B/C/D veya 1/2/3/4\n\n"
+        "⏱ Her soru 20 saniye"
+    )
+
+
+# ---------- QUIZ CORE ----------
 async def send_question(chat_id, context):
     q = random.choice(QUESTIONS)
 
@@ -30,7 +50,7 @@ async def send_question(chat_id, context):
 
     GAMES[chat_id] = {
         "answer": q["answer"],
-        "answers": {},  # user_id -> given answer
+        "answers": {},
         "correct": set()
     }
 
@@ -51,9 +71,17 @@ async def send_question(chat_id, context):
             f"@{USERNAMES.get(uid, uid)}"
             for uid in game["correct"]
         )
-        msg = f"⏰ Süre doldu!\n✅ Doğru cevap: {game['answer'].upper()}\n\n🎉 Doğru bilenler:\n{users}"
+        msg = (
+            f"⏰ Süre doldu!\n"
+            f"✅ Doğru cevap: {game['answer'].upper()}\n\n"
+            f"🎉 Doğru bilenler:\n{users}"
+        )
     else:
-        msg = f"⏰ Süre doldu!\n✅ Doğru cevap: {game['answer'].upper()}\n\n❌ Kimse doğru bilemedi."
+        msg = (
+            f"⏰ Süre doldu!\n"
+            f"✅ Doğru cevap: {game['answer'].upper()}\n\n"
+            f"❌ Kimse doğru bilemedi."
+        )
 
     await context.bot.send_message(chat_id, msg)
 
@@ -61,6 +89,7 @@ async def send_question(chat_id, context):
         await send_question(chat_id, context)
 
 
+# ---------- MESSAGE HANDLER ----------
 async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message:
         return
@@ -72,7 +101,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     USERNAMES[user_id] = user.username or f"user{user_id}"
 
-    # ADMIN KOMUTLARI
+    # ADMIN: QUIZ BAŞLAT
     if text == ".quiz" and user_id in ADMIN_IDS:
         if chat_id in GAMES:
             return
@@ -80,6 +109,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await send_question(chat_id, context)
         return
 
+    # ADMIN: SON
     if text == ".son" and user_id in ADMIN_IDS:
         if chat_id not in GAMES:
             return
@@ -88,7 +118,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         scores = SCORES.get(chat_id, {})
         if not scores:
-            await context.bot.send_message(chat_id, "Oyun bitti.\nKimse puan alamadı.")
+            await context.bot.send_message(chat_id, "🛑 Oyun bitti.\nKimse puan alamadı.")
             return
 
         sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
@@ -100,7 +130,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id, msg)
         return
 
-    # CEVAP KONTROLÜ
+    # CEVAPLAR
     if chat_id not in GAMES:
         return
 
@@ -119,9 +149,13 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     game["answers"][user_id] = text
 
 
+# ---------- MAIN ----------
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(MessageHandler(filters.TEXT, message_handler))
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
+
     print("🤖 Quiz bot çalışıyor...")
     app.run_polling()
 
