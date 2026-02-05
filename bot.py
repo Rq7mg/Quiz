@@ -2,7 +2,7 @@ import os
 import json
 import random
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
 # -----------------------
 # Ayarlar
@@ -20,13 +20,22 @@ def load_questions():
 QUESTIONS = load_questions()
 
 # -----------------------
-# /start komutu
+# Chat bazlı sorular ve skor
+# -----------------------
+CURRENT_QUESTIONS = {}  # chat_id -> {"answer": "C", "answered_users": set()}
+USER_SCORES = {}        # user_id -> score
+
+# -----------------------
+# /start
 # -----------------------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "📚 Quiz Bot hazır!\n\n"
         "Komutlar:\n"
-        ".quiz → Rastgele soru başlat\n"
+        ".quiz → Rastgele soru başlatır\n"
+        "Sorulara cevabı mesaj olarak yazın (A,B,C,D veya 1,2,3,4)\n"
+        ".add → Admin için soru ekleme\n"
+        ".score → Puanınızı gösterir"
     )
 
 # -----------------------
@@ -44,6 +53,52 @@ async def quiz_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         for idx, opt in enumerate(options, 1):
             msg += f"{idx}. {opt}\n"
         await update.message.reply_text(msg)
+
+        # Chat bazında doğru cevabı ve cevap veren kullanıcıları sakla
+        CURRENT_QUESTIONS[update.message.chat_id] = {
+            "answer": soru["answer"].strip().lower(),
+            "answered_users": set()
+        }
+
+# -----------------------
+# Kullanıcı cevabını kontrol et
+# -----------------------
+async def check_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    text = update.message.text.strip().lower()
+
+    if chat_id not in CURRENT_QUESTIONS:
+        return  # Bu chat’te soru yok
+
+    soru_data = CURRENT_QUESTIONS[chat_id]
+
+    # Daha önce cevap vermiş mi?
+    if user_id in soru_data["answered_users"]:
+        return  # Tek cevap hakkı
+
+    # Cevabı kontrol et
+    correct_answer = soru_data["answer"]
+    if text == correct_answer or text == str(ord(correct_answer.lower()) - 96):  # A->1, B->2
+        # Puan ver
+        USER_SCORES[user_id] = USER_SCORES.get(user_id, 0) + 1
+        await update.message.reply_text(f"✅ Doğru! Puanın: {USER_SCORES[user_id]}")
+    else:
+        await update.message.reply_text(f"❌ Yanlış! Doğru cevap: {correct_answer.upper()}")
+
+    # Kullanıcıyı işaretle
+    soru_data["answered_users"].add(user_id)
+
+    # Eğer tüm kullanıcılar cevapladıysa veya istenirse soruyu silebiliriz
+    # CURRENT_QUESTIONS.pop(chat_id)  # opsiyonel: soruyu sil
+
+# -----------------------
+# .score komutu
+# -----------------------
+async def score(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.from_user.id
+    score = USER_SCORES.get(user_id, 0)
+    await update.message.reply_text(f"📊 Puanınız: {score}")
 
 # -----------------------
 # .add komutu
@@ -76,19 +131,20 @@ async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
-    # /start komutu için MessageHandler yerine CommandHandler kullanabiliriz
-    from telegram.ext import CommandHandler
-    app.add_handler(CommandHandler("start", start))
+    from telegram.ext import CommandHandler, MessageHandler, filters
 
-    # .quiz ve .add komutlarını MessageHandler ile yakala
+    # Komutlar
+    app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, quiz_command))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, add_command))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, check_answer))
+    app.add_handler(MessageHandler(filters.Regex(r"^\.score$"), score))  # .score komutu
 
     print("Bot başlatıldı...")
     app.run_polling()
 
 # -----------------------
-# Entry point
+# Entry
 # -----------------------
 if __name__ == "__main__":
     main()
