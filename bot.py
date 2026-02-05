@@ -11,7 +11,6 @@ from telegram.ext import (
 )
 
 TOKEN = os.environ.get("TOKEN")
-
 QUESTIONS_FILE = "questions.json"
 
 def load_questions():
@@ -20,27 +19,33 @@ def load_questions():
 
 QUESTIONS = load_questions()
 
-CURRENT_QUESTIONS = {}   # chat_id -> data
+CURRENT_QUESTIONS = {}   # chat_id -> {answer, answered}
 USER_SCORES = {}         # user_id -> score
+USER_NAMES = {}          # user_id -> name
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🎯 Quiz Bot\n\n"
-        ".quiz → Soru getirir\n"
+        ".quiz → Rastgele soru\n"
         "Cevap: A/B/C/D veya 1/2/3/4\n"
-        ".score → Puanını gösterir"
+        ".score → Kendi puanın\n"
+        ".leaderboard → En iyiler"
     )
 
 
 async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.strip()
     chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
+    user = update.message.from_user
+    user_id = user.id
+
+    USER_NAMES[user_id] = user.username or f"User {user_id}"
 
     # Quiz
     if text.lower() == ".quiz":
         q = random.choice(QUESTIONS)
+
         msg = f"❓ {q['question']}\n\n"
         for i, opt in enumerate(q["options"], 1):
             msg += f"{i}. {opt}\n"
@@ -59,7 +64,27 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"📊 Puanın: {score}")
         return
 
-    # Answer check
+    # Leaderboard
+    if text.lower() == ".leaderboard":
+        if not USER_SCORES:
+            await update.message.reply_text("Henüz skor yok.")
+            return
+
+        sorted_scores = sorted(
+            USER_SCORES.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )[:10]
+
+        msg = "🏆 Leaderboard\n\n"
+        for i, (uid, score) in enumerate(sorted_scores, 1):
+            name = USER_NAMES.get(uid, f"User {uid}")
+            msg += f"{i}. @{name} — {score} puan\n"
+
+        await update.message.reply_text(msg)
+        return
+
+    # Cevap kontrolü
     if chat_id not in CURRENT_QUESTIONS:
         return
 
@@ -93,7 +118,7 @@ def main():
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
 
     print("🤖 Bot çalışıyor...")
-    app.run_polling()   # 🔴 BU SATIR PROGRAMI AYAKTA TUTAR
+    app.run_polling()
 
 
 if __name__ == "__main__":
